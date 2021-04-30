@@ -5,6 +5,7 @@ use tokio::time::sleep;
 use tracing::*;
 use tracing_subscriber::EnvFilter;
 
+// list of enode url's, hex, ip and port
 const BOOTSTRAP_NODES: &[&str] = &[
     "enode://d860a01f9722d78051619d1e2351aba3f43f943f6f00718d1b9baa4101932a1f5011f16bb2b1bb35db20d6fe28fa0bf09636d26a87d31de9ec6203eeedb1f666@18.138.108.67:30303",
     "enode://22a8232c3abc76a16ae9d6c3b164f98775fe226f0917b0ca871128a74a8e9630b458460865bab457221f1d448dd9791d24c4e5d88786180ac185df813a68d4de@3.209.45.79:30303",
@@ -28,6 +29,7 @@ async fn main() {
 
     let port = 50505;
 
+    // create node
     let node = Node::new(
         format!("0.0.0.0:{}", port).parse().unwrap(),
         SecretKey::new(&mut secp256k1::rand::thread_rng()),
@@ -53,6 +55,7 @@ async fn main() {
     loop {
         let target = rand::random();
         info!("Looking up random target: {}", target);
+        // lookup is worth looking into
         let result = node.lookup(target).await;
 
         for entry in result {

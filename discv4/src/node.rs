@@ -678,6 +678,7 @@ impl Node {
         self.lookup_inner(target).await
     }
 
+    // P0 - Node lookups
     async fn lookup_inner(&self, target: NodeId) -> Vec<NodeRecord> {
         #[derive(Clone, Copy)]
         struct QueryNode {
@@ -727,6 +728,7 @@ impl Node {
                 break;
             }
 
+            // discovery
             let fut = picked_nodes.into_iter().map(|(distance, node)| {
                 // ...send find node request...
                 node.queried = true;
